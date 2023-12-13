@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeasureAR</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Custom CSS -->
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+    .sidebar {
+      height: 100vh;
+      background-color: #007BFF;
+    }
+    .nav-link {
+      color: white;
+    }
+    .nav-link:hover {
+      color: #d4d4d4;
+    }
+    .main-content {
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .upload-area {
+      text-align: center;
+    }
+    .upload-area h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .upload-btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .upload-btn:hover {
+      background-color: #0056b3;
+    }
+    img#uploadedImage {
+      max-width: 30%;
+      margin-top: 20px;
+      display: none;
+    }
+    .dimensions {
+      margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              Upload Photo
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="shopping-cart"></span>
+              Guides
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main-content">
+      <div class="upload-area">
+        <h2>Pick a Photo</h2>
+        <p>Choose a photo from your desktop to start measuring</p>
+        <input type="file" id="fileUpload" name="image" accept="image/*" hidden />
+        <label for="fileUpload" class="upload-btn btn btn-primary">Choose file</label>
+        <img id="uploadedImage" src="#" alt="Uploaded Image" />
+        <p id="message"></p>
+        <div id="dimensions" class="dimensions">
+          Length: N/A, Width: N/A, Height: N/A
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+document.getElementById('fileUpload').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Display the image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const uploadedImage = document.getElementById('uploadedImage');
+            uploadedImage.src = e.target.result;
+            uploadedImage.style.display = 'block'; // Make the image visible
+        };
+        reader.readAsDataURL(file);
+
+        // Show a message
+        document.getElementById('message').textContent = 'Your image has been uploaded for dimension measurement.';
+
+        // Display dummy dimensions
+        document.getElementById('dimensions').textContent = 'Length: 100cm, Width: 50cm, Height: 30cm';
+    }
+});
+</script>
+</body>
+</html>
